@@ -21,8 +21,8 @@ function App() {
     });
     console.log(playerWon(playerMoves));
     if (playerWon(playerMoves)) {
-      console.log("bazinga");
-      setWinner(currentPlayer);
+      console.log(currentPlayer.name);
+      setWinner(currentPlayer.name);
     }
   }, [moves]);
 
@@ -43,28 +43,47 @@ function App() {
   function playerWon(filteredMoves) {
     const xValues = {};
     const yValues = {};
+    let diagonal = 0;
+    let diagonalReverse = 0;
 
     filteredMoves.forEach((move) => {
-      console.log(move);
+      if (move.coord.join() === [1, 1].join()) {
+        diagonalReverse++;
+      }
+      if (move.coord.join() === [2, 2].join()) {
+        diagonal++;
+        diagonalReverse++;
+      }
+      if (move.coord.join() === [3, 1].join()) {
+        diagonal++;
+      }
+      if (move.coord.join() === [1, 3].join()) {
+        diagonal++;
+      }
+      if (move.coord.join() === [3, 3].join()) {
+        diagonalReverse++;
+      }
       // move.cord[0] is the x value of the move
-      if (xValues[move.coord[0]]) {
+      /* if (xValues[move.coord[0]]) {
         xValues[move.coord[0]]++;
       } else {
         xValues[move.coord[0]] = 1;
-      }
-      /* xValues[move.coord[0]] = xValues[move[0]]
+      } */
+      xValues[move.coord[0]] = xValues[move.coord[0]]
         ? xValues[move.coord[0]] + 1
-        : 1; */
-      yValues[move.coord[1]] = yValues[move[1]]
+        : 1;
+      yValues[move.coord[1]] = yValues[move.coord[1]]
         ? yValues[move.coord[1]] + 1
         : 1;
     });
     console.log(xValues);
+    //console.log(Object.values(xValues));
 
-    Object.values(xValues).forEach((val) => console.log(val));
+    //Object.values(xValues).forEach((val) => console.log(val));
 
     if (Object.values(xValues).find((val) => val === 3)) return true;
     if (Object.values(yValues).find((val) => val === 3)) return true;
+    if (diagonal === 3 || diagonalReverse === 3) return true;
 
     return false;
   }
@@ -77,7 +96,7 @@ function App() {
   }
 
   if (winner) {
-    return <h1> WINNER: {winner.player.name}</h1>;
+    return <h1> WINNER: {winner}</h1>;
   }
 
   return (
