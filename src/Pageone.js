@@ -4,7 +4,7 @@ import "./App.css";
 import styles from "./Home.module.css";
 import { useState } from "react";
 
-function App() {
+function PageOne() {
   const [showModal, setShowModal] = useState(false);
   return (
     <div>
@@ -12,9 +12,9 @@ function App() {
         Join our Mailing List
       </button>
 
-      <Modal onClose={() => setShowModal(false)} show={showModal}></Modal>
+      <Modal onClose={() => setShowModal(false)} show={showModal} />
     </div>
   );
 }
 
-export default App;
+export default PageOne;
